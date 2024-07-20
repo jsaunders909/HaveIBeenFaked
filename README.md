@@ -7,6 +7,10 @@ To install our work, first clone the repo:
 
 ```git clone --recurse-submodules https://github.com/jsaunders909/HaveIBeenFaked.git ```
 
+(If you forgot to include submodules use):
+
+```git submodule update --init --recursive```
+
 Create a virtual environment with:
 
 ```conda create -n hibf python=3.10 -y```
