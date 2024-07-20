@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Travel Financial Companion</title>
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="/static/nav.css">
+  <script defer src="/static/nav.js"></script>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <link rel="stylesheet" href="static/chatbox.css">
+  <style>
+    /* Custom styles to make the chat box fill the whole page */
+    body {
+      height: 100%;
+      background: linear-gradient(45deg, #93c767, #074785);
+    }
+    .container-fluid, .row, .sidebar {
+      height: 100%;
+    }
+
+    .question-button {
+        background: white;
+        min-width: 30vw;
+        max-width: 10em;
+    }
+
+    .ai-message {
+        min-width: 30vw;
+        max-width: 10em;     
+    }
+
+    .title {
+        color: white;
+    }
+  </style>
+</head>
+<body>
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-lg-12 col-sm-4 sidebar d-flex align-items-center justify-content-center">
+        <div class="text-center">
+          <h2 class="title">GOJA - Your Travel Finance AI</h2>
+          <div class="chat-box">
+            <div class="predefined-questions">
+              <h3 class="title">Predefined Questions:</h3>
+              <br>
+              <ul id="question-list">
+                <li data-question="food" class="question-button">How much should I budget for food?</li>
+                <li data-question="transportation" class="question-button">What about transportation costs?</li>
+                <li data-question="activities" class="question-button">How much should I set aside for activities and attractions?</li>
+                <li data-question="card-fees" class="question-button">Are there any specific fees associated with my travel financial card?</li>
+                <li data-question="insurance" class="question-button">Should I factor in travel insurance costs?</li>
+              </ul>
+            </div>
+            <p style="text-align: left; color: white; margin-top: 2em;">Ask GOJA a question...</p>
+            <div style="text-align: left; border: 2px solid grey;" contenteditable="true" class="user-message">
+            </div>
+            <div style="background: none; color: white;" class="ai-message">
+              <p>Hi there! How can I help you with your travel finances?</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Bootstrap JS and your custom JS -->
+  <script defer src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+  <script defer src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+  <script defer src="static/chatbox.js"></script>
+</body>
+</html>
