@@ -7,7 +7,7 @@ class FRTorch:
 
     def __init__(self, image_size):
         # Create a face detection pipeline using MTCNN
-        margin = int(0.1 * image_size)
+        margin = 0 # int(0.1 * image_size)
         self.mtcnn = MTCNN(image_size=image_size, margin=margin, keep_all=True)
 
         # Create an inception resnet (in eval mode):

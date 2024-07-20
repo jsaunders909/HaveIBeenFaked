@@ -18,8 +18,16 @@ if not cap.isOpened():
     exit()
 
 name = input("Enter the name of the person: ")
+recognition_data = RecognitionData(name)
 
-print("Starting capture, press 'c' to capture and 'q' to quit.")
+print("You will now need to capture 3 photos of the person's face")
+print("One photo looking straight ahead, one looking to the left, and one looking to the right.")
+print("Press 'l' to capture the left photo, 'r' to capture the right photo, and 'f' to capture the front photo.")
+print("When you are done, press 's' to save the face data.")
+print("At any time, press 'q' to quit.")
+
+input("Press Enter to continue...")
+print("Starting capture...")
 
 # Start capturing the video
 while True:
@@ -37,7 +45,15 @@ while True:
     if retval & 0xFF == ord('q'):
         break
 
-    elif retval & 0xFF == ord('c'):
+    elif retval & 0xFF == ord('s'):
+        embedding, crop, bbox = model(frame, return_crop=True, return_bbox=True)
+        recognition_data.save(f"face_db/{name}.pkl")
+
+        print("Face data saved.")
+        break
+
+    elif retval & 0xFF == ord('l'):
+        print("Capturing left photo...")
         embedding, crop, bbox = model(frame, return_crop=True, return_bbox=True)
 
         if embedding is None:
@@ -45,8 +61,32 @@ while True:
             continue
 
         embedding = embedding[0].detach().cpu().numpy()
-        recognition_data = RecognitionData(name, embedding)
-        recognition_data.save(f"face_db/{name}.pkl")
+        
+        recognition_data.update_left(embedding)
+        print("Left photo captured.")
 
-        print(f"Saved face data for {name}.")
-        break
+    elif retval & 0xFF == ord('r'):
+        print("Capturing right photo...")
+        embedding, crop, bbox = model(frame, return_crop=True, return_bbox=True)
+
+        if embedding is None:
+            print("No face detected.")
+            continue
+
+        embedding = embedding[0].detach().cpu().numpy()
+        
+        recognition_data.update_right(embedding)
+        print("Right photo captured.")
+    
+    elif retval & 0xFF == ord('f'):
+        print("Capturing front photo...")
+        embedding, crop, bbox = model(frame, return_crop=True, return_bbox=True)
+
+        if embedding is None:
+            print("No face detected.")
+            continue
+
+        embedding = embedding[0].detach().cpu().numpy()
+        
+        recognition_data.update_front(embedding)
+        print("Front photo captured.")

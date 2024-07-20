@@ -25,14 +25,25 @@ class DBLookup:
     
         self.db = db
 
-    def lookup(self, embedding: np.ndarray, threshold: float = 0.6) -> str:
+    def lookup(self, embedding: np.ndarray, threshold: float = 0.65) -> str:
         """
         Look up the embedding in the database.
         """
 
         for data in self.db:
-            if np.linalg.norm(data.embedding - embedding) < threshold:
-                return data.name
+
+            # Check left, right, and front embeddings
+            if data.embedding_left is not None:
+                if np.linalg.norm(data.embedding_left - embedding) < threshold:
+                    return data.name
+
+            if data.embedding_right is not None:
+                if np.linalg.norm(data.embedding_right - embedding) < threshold:
+                    return data.name
+            
+            if data.embedding_front is not None:
+                if np.linalg.norm(data.embedding_front - embedding) < threshold:
+                    return data.name
 
         return "Unknown face"
         
