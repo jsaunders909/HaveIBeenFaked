@@ -9,7 +9,7 @@ cap = cv2.VideoCapture(0)
 
 # Create the face recognition model
 width, height = cap.get(cv2.CAP_PROP_FRAME_WIDTH), cap.get(cv2.CAP_PROP_FRAME_HEIGHT)
-model = FRTorch(image_size=256)
+model = FRTorch()
 db = DBLookup("face_db")
 
 # Check if the webcam is opened correctly
@@ -37,10 +37,10 @@ while True:
     for i in range(n_faces):
         name = db.lookup(embedding[i].detach().cpu().numpy())
         frame = draw_labelled_bbox(frame, bbox[i], name)
-    
+
     # Display the frame
     cv2.imshow("Webcam", frame)
 
     # Wait for the user to press 'q' to quit
-    if cv2.waitKey(1) & 0xFF == ord('q'):
+    if cv2.waitKey(1) & 0xFF == ord("q"):
         break
