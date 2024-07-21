@@ -8,6 +8,13 @@
   <link rel="stylesheet" href="../static/matchResults.css">
 </head>
 <body>
+  <style>
+    .image{
+      width: 128px;
+      height: 128px;
+      object-fit: cover;
+    }
+  </style>
   <div class="container rounded">
     <div class="inputContainer">
       <input type="text" name="name" id="name" placeholder="Enter username">
@@ -82,7 +89,7 @@
       username = document.getElementById("name").value;
 
       url = "http://127.0.0.1:8000/facecheck/" + username;
-
+      document.getElementById("results").innerHTML = "Searching...";
       fetch(url, {
         method: "GET",
       })
@@ -90,7 +97,7 @@
       .then(data => {
         if (Object.hasOwn(data, "success") && data.success == true) {
           images = data.images;
-
+          document.getElementById("results").innerHTML = "";
           for (let i = 0; i < images.length; i++) {
             add_image(images[i])
           }
@@ -109,7 +116,6 @@
       const image = document.createElement("img");
       image.src = URL.createObjectURL(blob);
       image.classList.add("image");
-      image.style.width = "128px";
       document.getElementById("results").appendChild(image);
     }
   </script>
