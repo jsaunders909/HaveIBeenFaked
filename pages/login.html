@@ -1,22 +1,19 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <link rel="stylesheet" href="style.css">
-    <link href="https://unpkg.com/@microsoft/atlas-css/dist/index.css" rel="stylesheet" />
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login Page</title>
-
+    <link rel="stylesheet" href="style.css">
+    <link href="https://unpkg.com/@microsoft/atlas-css/dist/index.css" rel="stylesheet" />
     <link rel="stylesheet" href="/static/nav.css">
-    <script defer src="/static/nav.js"></script>
     <link rel="stylesheet" href="/static/login.css">
+    <link href="http://ajax.googleapis.com/ajax/libs/jqueryui/1/themes/base/jquery-ui.css" rel="stylesheet" type="text/css">
+    <script defer src="/static/nav.js"></script>
     <script defer src="/static/login.js"></script>
-    <link
-      class="jsbin"
-      href="http://ajax.googleapis.com/ajax/libs/jqueryui/1/themes/base/jquery-ui.css"
-      rel="stylesheet"
-      type="text/css"
-    />
+    <style>
+        /* Add your additional styles here if needed */
+    </style>
 </head>
 <body>
     <br>
@@ -24,111 +21,60 @@
     <br>
     <center><h1>My Account</h1></center>
     <div class="container">
-        <!-- <img src="assets/images/JOGALogo.jpeg" alt="Logo" class="logo"> -->
+        <!-- Login Form -->
         <form action="#">
-            
             <label for="username">Username:</label>
             <input class="username" type="text" id="username" name="username" required>
             <label for="password">Password:</label>
             <input type="password" class="password" name="password" required>
-            <label for="username">First Name:</label>
-            <input class="username" type="text" id="username" name="username" required>
-            <label for="username">Last Name:</label>
-            <input class="username" type="text" id="username" name="username" required>
-            <label for="username">Email:</label>
-            <input class="username" type="text" id="username" name="username" required>
-            <button id="question" type="submit" class="button button-primary button-filled"><h1>Login</h1></button>
+            <label for="firstname">First Name:</label>
+            <input class="firstname" type="text" id="firstname" name="firstname" required>
+            <label for="lastname">Last Name:</label>
+            <input class="lastname" type="text" id="lastname" name="lastname" required>
+            <label for="email">Email:</label>
+            <input class="email" type="text" id="email" name="email" required>
+            <button id="login-btn" type="submit" class="button button-primary button-filled"><h1>Login</h1></button>
         </form>
-        <!-- <label class="label margin-bottom-xxs" for="input-demo">Share enough details about the problem for the community members to reproduce or correctly understand your issue.</label> -->
-  <div class="field">
-    <label class="label" for="sample-text-area">
-        <span class="required-indicator"></span>
-    </label>
-    
-    <div class="second-body">
-        <textarea
-            id="second-body"
-            placeholder="Latest matches"
-            name="text-area"
-            class="textarea"
-            minlength="10"
-            rows="4"
-            cols="30"
-            required
-        ></textarea>
-    </div>
-</div>
-    </div>
-    <!-- <div class="profile-picture">
-        <h1 class="upload-icon">
-            <i class="fa fa-plus fa-2x" aria-hidden="true"></i>
-        </h1>
-        <input class="file-uploader" type="file"
-        onchange="upload()" accept="image/*" />
-    </div> -->
-    <script
-    class="jsbin"
-    src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"
-  ></script>
-  <script
-    class="jsbin"
-    src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.0/jquery-ui.min.js"
-  ></script>
-    <div class="field">
-        <label class="label" for="sample-text-area">
-            <span class="required-indicator"></span>
-          <!-- <p>Response:</p> -->
-        </label>
-        <div id="responseBody" class="field-body">
+
+        <!-- File Upload Section -->
+        <div id="file-upload-section">
+            <label for="front-image">Front image:</label>
+            <input type="file" id="front-image" accept="image/*" onchange="loadFile(event)" required>
+            <img id="output" alt="Front Image Preview"/>
+
+            <label for="left-image">Left image:</label>
+            <input type="file" id="left-image" accept="image/*" onchange="previewImage(event)" required>
+            <img id="preview" alt="Left Image Preview"/>
+
+            <label for="right-image">Right image:</label>
+            <input type="file" id="right-image" accept="image/*" onchange="loadFile(event)" required>
+            <img id="output" alt="Right Image Preview"/>
         </div>
     </div>
-    <!-- <input type="file" id="image_input" accept="image/jpeg, image/png, image/jpg"> <p>Front Image</p> -->
-    <br>
-    <!-- <input type="file" id="image_input" accept="image/jpeg, image/png, image/jpg"> <p>Left Image</p> -->
-    <br>
-    <!-- <input type="file" id="image_input" accept="image/jpeg, image/png, image/jpg"> <p>Right Image</p> -->
-    <br>
-  <div id="display_image"></div>
-  <img src="profpic.png">
-  <p>Front image</p>
-  <input type="file" accept="image/*" onchange="loadFile(event)">
-<img id="output" alt="Image preview"/>
-<script>
-  function loadFile(event) {
-    const output = document.getElementById('output');
-    output.src = URL.createObjectURL(event.target.files[0]);
-    output.onload = () => {
-      URL.revokeObjectURL(output.src); // Free memory
-    };
-  }
-</script>
 
-<p>Left image</p>
-<input type="file" accept="image/*" onchange="previewImage(event)">
-<img id="preview" alt="Image preview"/>
-<script>
-  function previewImage(event) {
-    const reader = new FileReader();
-    reader.onload = () => {
-      const output = document.getElementById('preview');
-      output.src = reader.result;
-    };
-    reader.readAsDataURL(event.target.files[0]);
-  }
-</script>
+    <!-- JavaScript at the end of body -->
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.0/jquery-ui.min.js"></script>
+    <script src="functions.js"></script>
 
-<p>Right image</p>
-<input type="file" accept="image/*" onchange="loadFile(event)">
-<img id="output" alt="Image preview"/>
-<script>
-  function loadFile(event) {
-    const output = document.getElementById('output');
-    output.src = URL.createObjectURL(event.target.files[0]);
-    output.onload = () => {
-      URL.revokeObjectURL(output.src); // Free memory
-    };
-  }
-</script>
-  <script src="functions.js"></script>
+    <!-- JavaScript for image preview -->
+    <script>
+        function loadFile(event) {
+            const output = document.getElementById('output');
+            output.src = URL.createObjectURL(event.target.files[0]);
+            output.onload = () => {
+                URL.revokeObjectURL(output.src); // Free memory
+            };
+        }
+
+        function previewImage(event) {
+            const reader = new FileReader();
+            reader.onload = () => {
+                const output = document.getElementById('preview');
+                output.src = reader.result;
+            };
+            reader.readAsDataURL(event.target.files[0]);
+        }
+    </script>
 </body>
 </html>
