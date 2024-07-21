@@ -3,6 +3,7 @@ from fastapi.responses import JSONResponse
 from typing import Annotated
 from database import auth_db, count_db
 from recog_helper import add_image, scan_for_match
+from batch_scan_images import scan_images_for_matches
 
 app = FastAPI()
 
@@ -42,10 +43,19 @@ def add_right_face(username: Annotated[str, Form()], image: Annotated[bytes, Fil
 
 @app.get("/facecheck/")
 def face_check(username: Annotated[str, Form()]):
-    number_of_matches = count_db.get_count_from_username(username)
-    if number_of_matches:
-        return JSONResponse({"success": True, "message": f"Found {number_of_matches} matches for {username}."})
-    return JSONResponse({"success": False, "message": f"No matches found for {username}."})
+    scan_images_for_matches()
+    images = count_db.get_image_refs_by_user(username)
+    if images:
+        return JSONResponse({"success": True, "images": images})
+    else:
+        return JSONResponse({"success": False, "images": []})
+    
+@app.get("/image/{filename}")
+def get_image(filename: Annotated[str, Form()]):
+    with open(f"images/{filename}", "rb") as f:
+        image = f.read()
+        return JSONResponse({"success": True, "image": image})
+    
 
 if __name__ == "__main__":
     import uvicorn

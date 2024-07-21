@@ -19,7 +19,3 @@ def add_image(username:str, image_bytes:bytes, image_mode:str) -> bool:
 def scan_for_match(image_bytes:bytes) -> list:
     image = imdecode(np.frombuffer(image_bytes, np.uint8), -1)
     return check_image(image, "../face_db")
-
-def scan_for_match_with_cv2(filename:str) -> list:
-    image = imread(filename)
-    return check_image(image, "../face_db")
