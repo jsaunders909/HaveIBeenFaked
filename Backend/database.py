@@ -17,9 +17,12 @@ class Database:
                     dump(data, f, indent=4)
         return True
 
-    def get_user_by_username(self, username: str) -> str:
+    def get_password_by_username(self, username: str) -> str | None:
         with open(self.database, "r") as f:
             data = load(f)
-            return data[username]
+            try:
+                return data[username]
+            except KeyError:
+                return None
         
 auth_db = Database()
