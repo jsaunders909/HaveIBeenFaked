@@ -8,7 +8,6 @@
     <link rel="stylesheet" href="../static/nav.css">
     <link rel="stylesheet" href="../static/login.css">
     <script defer src="../static/nav.js"></script>
-    <script defer src="../static/login.js"></script>
     <style>
         /* Add your additional styles here if needed */
     </style>
@@ -20,18 +19,18 @@
     <center><h1>My Account</h1></center>
     <div class="container">
         <!-- Login Form -->
-        <form id="login-form">
+        <form name="loginForm" id="loginForm" onsubmit="login(event)">
             <label for="username">Username: <span style="color:red">*</span></label>
             <input class="username" type="text" id="username" name="username" required>
             <label for="password">Password: <span style="color:red">*</span></label>
-            <input type="password" class="password" name="password" required>
+            <input type="password" class="password" name="password" id="password" required>
             <label for="firstname">First Name:</label>
             <input class="firstname" type="text" id="firstname" name="firstname">
             <label for="lastname">Last Name:</label>
             <input class="lastname" type="text" id="lastname" name="lastname">
             <label for="email">Email:</label>
             <input class="email" type="text" id="email" name="email">
-            <button id="login-btn" type="submit" class="button button-primary button-filled"><h1>Login</h1></button>
+            <input id="login-btn" type="submit" class="button button-primary button-filled" value="Login"></input>
             <div id="file-upload-section">
                 <label for="front_image">Front image:</label>
                 <input type="file" id="front_image" accept="image/*" onchange="loadFile(event)" required>
@@ -42,70 +41,70 @@
                 <img id="preview" alt="Left Image Preview"/>
     
                 <label for="right_image">Right image:</label>
-                <input type="file" id="right-_mage" accept="image/*" onchange="loadFile(event)" required>
+                <input type="file" id="right_image" accept="image/*" onchange="loadFile(event)" required>
                 <img id="output" alt="Right Image Preview"/>
             </div>
         </form>
 
         <!-- File Upload Section -->
     </div>
-
-    <!-- JavaScript at the end of body -->
-
-    <!-- JavaScript for image preview -->
-    <script>
-        function loadFile(event) {
-            const output = document.getElementById('output');
-            output.src = URL.createObjectURL(event.target.files[0]);
-            output.onload = () => {
-                URL.revokeObjectURL(output.src); // Free memory
-            };
-        }
-
-        function previewImage(event) {
-            const reader = new FileReader();
-            reader.onload = () => {
-                const output = document.getElementById('preview');
-                output.src = reader.result;
-            };
-            reader.readAsDataURL(event.target.files[0]);
-        }
-
-        const login = (event) => {
-            console.log("Login button clicked");
-            event.preventDefault();
-            console.log("Form submitted");
-            const username = document.getElementById("username").value;
-            const password = document.getElementById("password").value;
-
-            const front_image = document.getElementById("front_image").files[0];
-            const left_image = document.getElementById("left_image").files[0];
-            const right_image = document.getElementById("right-_mage").files[0];
-            
-            const formData = new FormData();
-            formData.append("username", username);
-            formData.append("password", password);
-
-            formData.append("front_image", front_image);
-            formData.append("left_image", left_image);
-            formData.append("right_image", right_image);
-            
-            const url = "http://127.0.0.1:8000/weirdLogin/";
-
-            fetch(url, {
-                method: "POST",
-                body: formData
-            })
-            .then(response => response.json())
-            .then(data => {
-                if (Object.hasOwn(data, "success") && data.success == true) {
-                    alert("Login successful!");
-                    window.location.href = "/results.html";
-                } else {
-                    alert("Login failed. Please try again.");
-                }
-            })
-        }
-    </script>
 </body>
+<script>
+    function loadFile(event) {
+        const output = document.getElementById('output');
+        output.src = URL.createObjectURL(event.target.files[0]);
+        output.onload = () => {
+            URL.revokeObjectURL(output.src); // Free memory
+        };
+    }
+
+    function previewImage(event) {
+        const reader = new FileReader();
+        reader.onload = () => {
+            const output = document.getElementById('preview');
+            output.src = reader.result;
+        };
+        reader.readAsDataURL(event.target.files[0]);
+    }
+
+    // function login() {
+    function login (event) {
+
+        event.preventDefault();
+        console.log("Login button clicked");
+        console.log("Form submitted");
+        const username = document.getElementById("username").value;
+        const password = document.getElementById("password").value;
+
+        const front_image = document.getElementById("front_image").files[0];
+        const left_image = document.getElementById("left_image").files[0];
+        const right_image = document.getElementById("right_image").files[0];
+        
+        const formData = new FormData();
+        formData.append("username", username);
+        formData.append("password", password);
+
+        formData.append("front_image", front_image);
+        formData.append("left_image", left_image);
+        formData.append("right_image", right_image);
+        
+        const url = "http://127.0.0.1:8000/weirdLogin/";
+
+        fetch(url, {
+            method: "POST",
+            body: formData
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (Object.hasOwn(data, "success") && data.success == true) {
+                alert("Login successful!");
+                window.location.href = "/results.html";
+            } else {
+                alert("Login failed. Please try again.");
+                console.log(data)
+            }
+        })
+    }
+    // document.querySelector('#loginForm').addEventListener("submit", login);
+</script>
 </html>

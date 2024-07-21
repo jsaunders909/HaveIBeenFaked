@@ -4,12 +4,21 @@ from typing import Annotated
 from database import auth_db, count_db
 from recog_helper import add_image
 from batch_scan_images import scan_images_for_matches
+from fastapi.templating import Jinja2Templates
+from fastapi.staticfiles import StaticFiles
+from fastapi.middleware.cors import CORSMiddleware
 
 app = FastAPI()
 
-@app.get("/")
-def index():
-    return "Hello World"
+app.mount("/static", StaticFiles(directory="static"), name="static")
+
+templates = Jinja2Templates(directory="templates")
+
+app.add_middleware(CORSMiddleware, allow_origins=["*"], allow_credentials=True, allow_methods=["*"], allow_headers=["*"])
+
+# @app.get("/")
+# def index():
+#     return templates.TemplateResponse("index.html", {"request": {}})
 
 @app.get("/signup/")
 def signup(username: Annotated[str, Form], password: Annotated[str, Form]):
@@ -20,6 +29,7 @@ def signup(username: Annotated[str, Form], password: Annotated[str, Form]):
     
 @app.post("/weirdLogin/")
 def weird_login(username: Annotated[str, Form()], password: Annotated[str, Form()], front_image: Annotated[bytes, File()], left_image: Annotated[bytes, File()], right_image: Annotated[bytes, File()]):
+    print(username, password)
     auth_db.add_user(username, password)
     result = add_image(username, front_image, "front")
     result = add_image(username, left_image, "left")
