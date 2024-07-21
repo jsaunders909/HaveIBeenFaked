@@ -62,9 +62,6 @@ class RecognitionData:
             ]
         ):
             print(f"Warning: Incomplete embeddings for {self.name}.")
-            cont = input("Do you want to svae the partial embedding? (y/n) ")
-            if cont.lower() != "y":
-                return
 
         with open(path, "wb") as f:
             pickle.dump(self, f)
