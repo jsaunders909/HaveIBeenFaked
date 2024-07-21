@@ -11,7 +11,7 @@ image_funcs = {
 
 def add_image(username:str, image_bytes:bytes, image_mode:str) -> bool:
     uid = username
-    image = np.frombuffer(image_bytes, np.uint8)
+    image = imdecode(np.frombuffer(image_bytes, np.uint8), -1)
     name = username
 
     return image_funcs[image_mode](uid, image, name, "../face_db")

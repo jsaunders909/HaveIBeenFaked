@@ -1,4 +1,4 @@
-from fastapi import FastAPI, Form, File
+from fastapi import FastAPI, Form, File, UploadFile
 from fastapi.responses import JSONResponse, HTMLResponse
 from typing import Annotated
 from database import auth_db, count_db
@@ -16,28 +16,23 @@ templates = Jinja2Templates(directory="templates")
 
 app.add_middleware(CORSMiddleware, allow_origins=["*"], allow_credentials=True, allow_methods=["*"], allow_headers=["*"])
 
-# @app.get("/")
-# def index():
-#     return templates.TemplateResponse("index.html", {"request": {}})
-
-@app.get("/signup/")
-def signup(username: Annotated[str, Form], password: Annotated[str, Form]):
-    if auth_db.add_user(username, password):
-        return JSONResponse({"success": True})
-    else:
-        return JSONResponse({"success": False})
+# @app.get("/signup/")
+# def signup(username: Annotated[str, Form], password: Annotated[str, Form]):
+#     if auth_db.add_user(username, password):
+#         return JSONResponse({"success": True})
+#     else:
+#         return JSONResponse({"success": False})
     
-@app.post("/weirdLogin/")
-def weird_login(username: Annotated[str, Form()], password: Annotated[str, Form()], front_image: Annotated[bytes, File()], left_image: Annotated[bytes, File()], right_image: Annotated[bytes, File()]):
-    print(username, password)
+@app.post("/signup/")
+def signup(username: Annotated[str, Form()], password: Annotated[str, Form()], front_image: UploadFile, left_image: UploadFile, right_image: UploadFile):
     auth_db.add_user(username, password)
-    result = add_image(username, front_image, "front")
-    result = add_image(username, left_image, "left")
-    result = add_image(username, right_image, "right")
-    return JSONResponse({"success": result})
 
-@app.get("/login/")
-def login(username: Annotated[str, Form], password: Annotated[str, Form]):
+    results = [add_image(username, front_image.file.read(), "front"), add_image(username, left_image.file.read(), "left"), add_image(username, right_image.file.read(), "right")]
+    return JSONResponse({"success": all(results), "results": results})
+
+@app.post("/login/")
+def login(username: Annotated[str, Form()], password: Annotated[str, Form()]):
+    return JSONResponse({"success": True})
     user_password = auth_db.get_user_by_username(username)
     if user_password and user_password == password:
         return JSONResponse({"success": True})
@@ -52,15 +47,14 @@ def add_front_face(username: Annotated[str, Form()], image: Annotated[bytes, Fil
 def add_left_face(username: Annotated[str, Form()], image: Annotated[bytes, File()]):
     result = add_image(username, image, "left")
     return JSONResponse({"success": result})
-    
 
 @app.post("/faces/right")
 def add_right_face(username: Annotated[str, Form()], image: Annotated[bytes, File()]):
     result = add_image(username, image, "right")
     return JSONResponse({"success": result})
 
-@app.get("/facecheck/")
-def face_check(username: Annotated[str, Form()]):
+@app.get("/facecheck/{username}")
+def face_check(username: str):
     scan_images_for_matches()
     images = count_db.get_image_refs_by_user(username)
     if images:

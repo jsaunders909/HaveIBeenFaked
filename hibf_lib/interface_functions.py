@@ -1,6 +1,7 @@
 from hibf_lib.recognition_data import RecognitionData
 from hibf_lib.models.db_lookup import DBLookup
 from hibf_lib.models.face_recognition import FRTorch
+import os
 
 
 def add_left_image(uid, image, name, database_root="face_db"):

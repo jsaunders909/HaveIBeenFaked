@@ -1,11 +1,15 @@
 from json import load, dump
 from typing import List
+from os import path
 
 class Database:
     """This class is responsible for the JSON interface for User Auth information"""
 
     def __init__(self):
         self.database = "./database.json"
+        if not path.exists(self.database):
+            with open(self.database, "w") as f:
+                dump({}, f)
 
     def add_user(self, username: str, password: str) -> bool:
         with open(self.database, "r") as f:
@@ -30,6 +34,9 @@ class Database:
 class AnotherDatabase:
     def __init__(self):
         self.database = "./userCount.json"
+        if not path.exists(self.database):
+            with open(self.database, "w") as f:
+                dump({}, f)
 
     def add_img_ref_to_user(self, username: str, img_name: str) -> None:
         with open(self.database, "r") as f:

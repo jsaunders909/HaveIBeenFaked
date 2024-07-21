@@ -33,15 +33,15 @@
             <input id="login-btn" type="submit" class="button button-primary button-filled" value="Login"></input>
             <div id="file-upload-section">
                 <label for="front_image">Front image:</label>
-                <input type="file" id="front_image" accept="image/*" onchange="loadFile(event)" required>
+                <input type="file" id="front_image" accept="image/*" onchange="loadFile(event)">
                 <img id="output" alt="Front Image Preview"/>
     
                 <label for="left_image">Left image:</label>
-                <input type="file" id="left_image" accept="image/*" onchange="previewImage(event)" required>
+                <input type="file" id="left_image" accept="image/*" onchange="previewImage(event)">
                 <img id="preview" alt="Left Image Preview"/>
     
                 <label for="right_image">Right image:</label>
-                <input type="file" id="right_image" accept="image/*" onchange="loadFile(event)" required>
+                <input type="file" id="right_image" accept="image/*" onchange="loadFile(event)">
                 <img id="output" alt="Right Image Preview"/>
             </div>
         </form>
@@ -51,44 +51,55 @@
 </body>
 <script>
     function loadFile(event) {
-        const output = document.getElementById('output');
-        output.src = URL.createObjectURL(event.target.files[0]);
-        output.onload = () => {
-            URL.revokeObjectURL(output.src); // Free memory
-        };
+        // const output = document.getElementById('output');
+        // output.src = URL.createObjectURL(event.target.files[0]);
+        // output.onload = () => {
+        //     URL.revokeObjectURL(output.src); // Free memory
+        // };
     }
 
     function previewImage(event) {
-        const reader = new FileReader();
-        reader.onload = () => {
-            const output = document.getElementById('preview');
-            output.src = reader.result;
-        };
-        reader.readAsDataURL(event.target.files[0]);
+        // const reader = new FileReader();
+        // reader.onload = () => {
+        //     const output = document.getElementById('preview');
+        //     output.src = reader.result;
+        // };
+        // reader.readAsDataURL(event.target.files[0]);
     }
 
     // function login() {
     const login = (event) => {
-        alert("I'VE BEEN PRESSED!")
         event.preventDefault();
         console.log("Login button clicked");
         console.log("Form submitted");
         const username = document.getElementById("username").value;
         const password = document.getElementById("password").value;
 
-        const front_image = document.getElementById("front_image").files[0];
-        const left_image = document.getElementById("left_image").files[0];
-        const right_image = document.getElementById("right_image").files[0];
-        
         const formData = new FormData();
         formData.append("username", username);
         formData.append("password", password);
 
-        formData.append("front_image", front_image);
-        formData.append("left_image", left_image);
-        formData.append("right_image", right_image);
-        
-        const url = "http://127.0.0.1:8000/weirdLogin/";
+        const front_input = document.getElementById("front_image");
+        const left_input = document.getElementById("left_image");
+        const right_input = document.getElementById("right_image");
+
+        let front_image = null;
+        let left_image = null;
+        let right_image = null;
+
+        let url = "http://127.0.0.1:8000/login/";
+
+        if (front_input.files.length > 0 && left_input.files.length > 0 && right_input.files.length > 0) {
+            front_image = document.getElementById("front_image").files[0];
+            left_image = document.getElementById("left_image").files[0];
+            right_image = document.getElementById("right_image").files[0];
+
+            formData.append("front_image", front_image);
+            formData.append("left_image", left_image);
+            formData.append("right_image", right_image);
+            
+            url = "http://127.0.0.1:8000/signup/";
+        }
 
         fetch(url, {
             method: "POST",
@@ -98,7 +109,7 @@
         .then(data => {
             if (Object.hasOwn(data, "success") && data.success == true) {
                 alert("Login successful!");
-                window.location.href = "/results.html";
+                window.location.href = "results.html";
             } else {
                 alert("Login failed. Please try again.");
                 console.log(data)

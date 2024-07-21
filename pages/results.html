@@ -9,9 +9,17 @@
 </head>
 <body>
   <div class="container rounded">
-    <h1>Instagram Accounts Using your Likeness.. </h1>
+    <div class="inputContainer">
+      <input type="text" name="name" id="name" placeholder="Enter username">
+      <button onclick="searchForUser()">SEARCH</button>
+    </div>
+    <h1>Pictures we found you in... </h1>
+
+    <div id="results">
+
+    </div>
     
-    <div class="container rounded">
+    <!-- <div class="container rounded">
       <h1>@jacks_420</h1>
       <div class="buttons">
         <div class="matchResults cold">
@@ -59,7 +67,7 @@
       <p id="selection">If you have found something concerning these are your next steps</p>
       <button onclick="handleNextSteps()">Next steps</button>
     </div>
-  </div>
+  </div> -->
 
   <script src="../static/nav.js" defer></script>
   <script src="../static/matchResults.js" defer></script>
@@ -68,6 +76,41 @@
     function handleNextSteps() {
       // Add your logic for handling next steps here
       alert("Handling next steps...");
+    }
+
+    const searchForUser = () => {
+      username = document.getElementById("name").value;
+
+      url = "http://127.0.0.1:8000/facecheck/" + username;
+
+      fetch(url, {
+        method: "GET",
+      })
+      .then(response => response.json())
+      .then(data => {
+        if (Object.hasOwn(data, "success") && data.success == true) {
+          images = data.images;
+
+          for (let i = 0; i < images.length; i++) {
+            add_image(images[i])
+          }
+
+        } else {
+          document.getElementById("results").innerHTML = "No results found";
+        }
+      })
+    }
+
+    const add_image = async (image_name) => {
+      const url = "http://127.0.0.1:8000/image/" + image_name;
+      
+      const response = await fetch(url);
+      const blob = await response.blob();
+      const image = document.createElement("img");
+      image.src = URL.createObjectURL(blob);
+      image.classList.add("image");
+      image.style.width = "128px";
+      document.getElementById("results").appendChild(image);
     }
   </script>
 </body>

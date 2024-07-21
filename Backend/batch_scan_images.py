@@ -6,15 +6,20 @@ def scan_images_for_matches():
     image_folder = "./images/"
 
     users = {}
-
     for image_file in listdir(image_folder):
         with open(image_folder + image_file, "rb") as f:
             image_bytes = f.read()
 
-        names_in_image = scan_for_match(image_bytes)
+        try:
+            names_in_image = scan_for_match(image_bytes)
+        except Exception as e:
+            print(image_file, e)
+            continue
 
         if names_in_image:
             for name in names_in_image:
+                if name.startswith("Unknown (Closest Match: "):
+                    name = name.split(": ")[-1].strip(')')
                 users.setdefault(name, [])
                 users[name].append(image_file)
     
