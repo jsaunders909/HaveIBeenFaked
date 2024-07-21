@@ -1,10 +1,13 @@
 from requests import get, post
 
-sample_image = "../sample_images/Biden.jpg"
+filename = "pineapple.jpeg"
 
-with open(sample_image, "rb") as f:
-    bytes = f.read()
+url = "http://127.0.0.1:8000/image/" + filename
 
-username = "John"
+response = get(url)
 
-results = []
+response.raise_for_status()
+
+print(response.content)
+with open(f"images/output.jpg", "wb") as f:
+    f.write(response.content)

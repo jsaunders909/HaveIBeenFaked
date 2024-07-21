@@ -1,5 +1,5 @@
 from fastapi import FastAPI, Form, File
-from fastapi.responses import JSONResponse
+from fastapi.responses import JSONResponse, HTMLResponse
 from typing import Annotated
 from database import auth_db, count_db
 from recog_helper import add_image, scan_for_match
@@ -51,10 +51,10 @@ def face_check(username: Annotated[str, Form()]):
         return JSONResponse({"success": False, "images": []})
     
 @app.get("/image/{filename}")
-def get_image(filename: Annotated[str, Form()]):
+def get_image(filename: str):
     with open(f"images/{filename}", "rb") as f:
         image = f.read()
-        return JSONResponse({"success": True, "image": image})
+        return HTMLResponse(headers={"Content-Type": "application/octet-stream"}, content=image)
     
 
 if __name__ == "__main__":
