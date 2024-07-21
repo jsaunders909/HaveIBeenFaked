@@ -5,9 +5,9 @@ document.querySelector("body").innerHTML += `<header class="header">
     <div></div>
 </div>
 
-<h1 class="headerTitle"><p><img src="/assets/images/Have I Been Faked.png"></p> <p>Have I Been Faked</p></h1>
+<h1 class="headerTitle"><p><img src="../assets/images/Have I Been Faked.png"></p> <p>Have I Been Faked</p></h1>
 
-<img class="headerLogo" draggable="false" alt="" src="/shared/assets/toyfactory.png">
+<img class="headerLogo" draggable="false" alt="" src="/shared../assets/toyfactory.png">
 </header>
 
 <section class="menuBackdrop">
