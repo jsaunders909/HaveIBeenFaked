@@ -1,7 +1,7 @@
 """This file will be responsible for adding helper methods for the parser"""
 from hibf_lib import add_front_image, add_right_image, add_left_image, check_image
 import numpy as np
-from cv2 import imdecode
+from cv2 import imread, imdecode
 
 image_funcs = {
     "left": add_left_image,
@@ -10,12 +10,16 @@ image_funcs = {
 }
 
 def add_image(username:str, image_bytes:bytes, image_mode:str) -> bool:
-    uid = id(username)
+    uid = username
     image = np.frombuffer(image_bytes, np.uint8)
     name = username
 
     return image_funcs[image_mode](uid, image, name, "../face_db")
 
-def scan_for_match(image_bytes:bytes) -> bool:
-    image = np.frombuffer(image_bytes, np.uint8)
-    return bool(check_image(image, "../face_db"))
+def scan_for_match(image_bytes:bytes) -> list:
+    image = imdecode(np.frombuffer(image_bytes, np.uint8), -1)
+    return check_image(image, "../face_db")
+
+def scan_for_match_with_cv2(filename:str) -> list:
+    image = imread(filename)
+    return check_image(image, "../face_db")

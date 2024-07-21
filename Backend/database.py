@@ -1,4 +1,5 @@
-from json import load, dump, loads, dumps
+from json import load, dump
+from typing import List
 
 class Database:
     """This class is responsible for the JSON interface for User Auth information"""
@@ -13,7 +14,7 @@ class Database:
                 return False
             else:
                 data[username] = password
-                count_db.increment_user_count(username, 0)
+                count_db.add_user_and_refs(username, [])
                 with open(self.database, "w") as f:
                     dump(data, f, indent=4)
         return True
@@ -30,23 +31,30 @@ class AnotherDatabase:
     def __init__(self):
         self.database = "./userCount.json"
 
-    def increment_user_count(self, username: str, value: int=1) -> None:
+    def add_img_ref_to_user(self, username: str, img_name: str) -> None:
         with open(self.database, "r") as f:
             data = load(f)
             if username in data:
-                data[username] += 1
+                data[username].append(img_name)
             else:
-                data[username] = value
+                data[username] = [img_name]
             with open(self.database, "w") as f:
                 dump(data, f, indent=4)
 
-    def get_count_from_username(self, username: str) -> int | None:
+    def get_image_refs_by_user(self, username: str) -> list | None:
         with open(self.database, "r") as f:
             data = load(f)
             try:
                 return data[username]
             except KeyError:
                 return None
+            
+    def add_user_and_refs(self, username: str, refs:List[str]):
+        with open(self.database, "r") as f:
+            data = load(f)
+            data[username] = refs
+            with open(self.database, "w") as f:
+                dump(data, f, indent=4)
         
 count_db = AnotherDatabase()
 auth_db = Database()
