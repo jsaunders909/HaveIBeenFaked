@@ -53,7 +53,7 @@ while True:
 
     elif retval & 0xFF == ord("s"):
         embedding, crop, bbox = model(frame, return_crop=True, return_bbox=True)
-        recognition_data.save(f"face_db/{uuid.uuid4()}.pkl")
+        recognition_data.save(f"face_db/{uuid.uuid4()}.json")
 
         print("Face data saved.")
         break

@@ -21,7 +21,7 @@ class DBLookup:
         db = []
 
         for file in os.listdir(self.db_path):
-            if file.endswith(".pkl"):
+            if file.endswith(".json"):
                 db.append(RecognitionData.load(os.path.join(self.db_path, file)))
 
         self.db = db

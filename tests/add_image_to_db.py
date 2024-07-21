@@ -17,7 +17,7 @@ def add_image_to_db(image, name):
     embedding = embedding[0].detach().cpu().numpy()
     recognition_data.update_front(embedding)
 
-    recognition_data.save(f"face_db/{uuid.uuid4()}.pkl")
+    recognition_data.save(f"face_db/{uuid.uuid4()}.json")
     print("Face data saved.")
 
     return True
@@ -28,8 +28,8 @@ if __name__ == "__main__":
     import argparse
 
     parser = argparse.ArgumentParser(description="Add an image to the database.")
-    parser.add_argument("--image", type=str, help="Path to the image.")
-    parser.add_argument("--name", type=str, help="Name of the person in the image.")
+    parser.add_argument("--image", type=str, help="Path to the image.", required=True)
+    parser.add_argument("--name", type=str, help="Name of the person in the image.", required=True)
     args = parser.parse_args()
 
     image = cv2.imread(args.image)
