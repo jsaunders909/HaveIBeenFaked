@@ -1,5 +1,5 @@
 # Class which looks at the database and returns matches.
-from recognition_data import RecognitionData
+from hibf_lib.recognition_data import RecognitionData
 import os
 import numpy as np
 
@@ -21,7 +21,7 @@ class DBLookup:
         db = []
 
         for file in os.listdir(self.db_path):
-            if file.endswith(".pkl"):
+            if file.endswith(".json"):
                 db.append(RecognitionData.load(os.path.join(self.db_path, file)))
 
         self.db = db

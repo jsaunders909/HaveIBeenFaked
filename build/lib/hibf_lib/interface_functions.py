@@ -17,7 +17,7 @@ def add_left_image(uid, image, name, database_root="face_db"):
     """
     model = FRTorch()
 
-    data_path = os.path.join(database_root, f"{uid}.pkl")
+    data_path = os.path.join(database_root, f"{uid}.json")
 
     if os.path.exists(data_path):
         recognition_data = RecognitionData.load(data_path)
@@ -58,7 +58,7 @@ def add_right_image(uid, image, name, database_root="face_db"):
     """
     model = FRTorch()
 
-    data_path = os.path.join(database_root, f"{uid}.pkl")
+    data_path = os.path.join(database_root, f"{uid}.json")
 
     if os.path.exists(data_path):
         recognition_data = RecognitionData.load(data_path)
@@ -99,7 +99,7 @@ def add_front_image(uid, image, name, database_root="face_db"):
     """
     model = FRTorch()
 
-    data_path = os.path.join(database_root, f"{uid}.pkl")
+    data_path = os.path.join(database_root, f"{uid}.json")
 
     if os.path.exists(data_path):
         recognition_data = RecognitionData.load(data_path)

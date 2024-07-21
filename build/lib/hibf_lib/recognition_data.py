@@ -1,4 +1,4 @@
-import pickle
+import json
 import numpy as np
 
 
@@ -63,13 +63,26 @@ class RecognitionData:
         ):
             print(f"Warning: Incomplete embeddings for {self.name}.")
 
-        with open(path, "wb") as f:
-            pickle.dump(self, f)
+        # Create a dictionary to store the data.
+        data = {
+            "name": self.name,
+            "embedding_left": self.embedding_left.tolist() if self.embedding_left is not None else None,
+            "embedding_right": self.embedding_right.tolist() if self.embedding_right is not None else None,
+            "embedding_front": self.embedding_front.tolist() if self.embedding_front is not None else None,
+        }
+        
+        json.dump(data, open(path, "w"))
 
-    @staticmethod
-    def load(path: str):
+    @classmethod
+    def load(cls, path: str):
         """
         Load the recognition data from a file.
         """
-        with open(path, "rb") as f:
-            return pickle.load(f)
+        data = json.load(open(path, "r"))
+
+        recognition_data = cls(data["name"])
+        recognition_data.embedding_left = np.array(data["embedding_left"]) if data["embedding_left"] is not None else None
+        recognition_data.embedding_right = np.array(data["embedding_right"]) if data["embedding_right"] is not None else None
+        recognition_data.embedding_front = np.array(data["embedding_front"]) if data["embedding_front"] is not None else None
+
+        return recognition_data
