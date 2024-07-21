@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "d991405d28d6ef2daa09a524046e56453c06af55620a28b19ced0811e6ffe5e5"
+            "sha256": "a529c25541bd42a22dd560689ee71e536beadf63e06601aca9fd3efe54d86eab"
         },
         "pipfile-spec": 6,
         "requires": {
@@ -216,6 +216,9 @@
             "markers": "python_version >= '3.7'",
             "version": "==0.14.0"
         },
+        "hibf-lib": {
+            "file": "."
+        },
         "httpcore": {
             "hashes": [
                 "sha256:34a38e2f9291467ee3b44e89dd52615370e152954ba21721378a87b2960f7a61",
@@ -425,7 +428,7 @@
                 "sha256:f870204a840a60da0b12273ef34f7051e98c3b5961b61b0c2c1be6dfd64fbcd3",
                 "sha256:ffa75af20b44f8dba823498024771d5ac50620e6915abac414251bd971b4529f"
             ],
-            "markers": "python_version >= '3.10'",
+            "markers": "python_version >= '3.9'",
             "version": "==1.26.4"
         },
         "nvidia-cublas-cu12": {

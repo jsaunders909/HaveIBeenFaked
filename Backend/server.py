@@ -2,7 +2,7 @@ from fastapi import FastAPI, Form, File
 from fastapi.responses import JSONResponse, HTMLResponse
 from typing import Annotated
 from database import auth_db, count_db
-from recog_helper import add_image, scan_for_match
+from recog_helper import add_image
 from batch_scan_images import scan_images_for_matches
 
 app = FastAPI()
