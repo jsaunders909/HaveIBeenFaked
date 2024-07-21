@@ -5,21 +5,29 @@ Project repo for the Microsoft InternHacks 2024 - Have I been faked
 # Installation
 To install our work, first clone the repo:
 
-```git clone --recurse-submodules https://github.com/jsaunders909/HaveIBeenFaked.git ```
+```git clone https://github.com/jsaunders909/HaveIBeenFaked.git ```
 
-(If you forgot to include submodules use):
+Then install our package (ideally you use a virtual environment like conda).
 
-```git submodule update --init --recursive```
+```
+cd HaveIBeenFaked
+pip install -e .
+```
 
-Create a virtual environment with:
+# Running the Live Demo
 
-```conda create -n hibf python=3.10 -y```
+You can run the live demo straight from the repo. First you can add your facial profile with the script:
 
-Activate it:
+```
+python tests/add_to_db.py
+```
 
-```conda activate hibf```
+You might have to click on the window that gets opened. Press enter to start, then 'f' to take a frontal image, 'l' and 'r' to take left and right images, take these at about a 45 degree angle. Press 's' once you have all your images.
 
-Install requirements:
+You can then run the live demo with:
 
-```pip install -r requirements.txt```
+```
+python tests/test.py
+```
+
 
