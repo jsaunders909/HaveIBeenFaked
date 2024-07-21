@@ -21,4 +21,5 @@ def scan_images_for_matches():
     for name, images in users.items():
         count_db.add_user_and_refs(name, images)
     
-
+if __name__ == "__main__":
+    scan_images_for_matches()
