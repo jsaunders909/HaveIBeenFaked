@@ -4,11 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login Page</title>
-    <link rel="stylesheet" href="style.css">
     <link href="https://unpkg.com/@microsoft/atlas-css/dist/index.css" rel="stylesheet" />
     <link rel="stylesheet" href="/static/nav.css">
     <link rel="stylesheet" href="/static/login.css">
-    <link href="http://ajax.googleapis.com/ajax/libs/jqueryui/1/themes/base/jquery-ui.css" rel="stylesheet" type="text/css">
     <script defer src="/static/nav.js"></script>
     <script defer src="/static/login.js"></script>
     <style>
@@ -22,40 +20,37 @@
     <center><h1>My Account</h1></center>
     <div class="container">
         <!-- Login Form -->
-        <form action="#">
-            <label for="username">Username:</label>
+        <form id="login-form">
+            <label for="username">Username: <span style="color:red">*</span></label>
             <input class="username" type="text" id="username" name="username" required>
-            <label for="password">Password:</label>
+            <label for="password">Password: <span style="color:red">*</span></label>
             <input type="password" class="password" name="password" required>
             <label for="firstname">First Name:</label>
-            <input class="firstname" type="text" id="firstname" name="firstname" required>
+            <input class="firstname" type="text" id="firstname" name="firstname">
             <label for="lastname">Last Name:</label>
-            <input class="lastname" type="text" id="lastname" name="lastname" required>
+            <input class="lastname" type="text" id="lastname" name="lastname">
             <label for="email">Email:</label>
-            <input class="email" type="text" id="email" name="email" required>
+            <input class="email" type="text" id="email" name="email">
             <button id="login-btn" type="submit" class="button button-primary button-filled"><h1>Login</h1></button>
+            <div id="file-upload-section">
+                <label for="front_image">Front image:</label>
+                <input type="file" id="front_image" accept="image/*" onchange="loadFile(event)" required>
+                <img id="output" alt="Front Image Preview"/>
+    
+                <label for="left_image">Left image:</label>
+                <input type="file" id="left_image" accept="image/*" onchange="previewImage(event)" required>
+                <img id="preview" alt="Left Image Preview"/>
+    
+                <label for="right_image">Right image:</label>
+                <input type="file" id="right-_mage" accept="image/*" onchange="loadFile(event)" required>
+                <img id="output" alt="Right Image Preview"/>
+            </div>
         </form>
 
         <!-- File Upload Section -->
-        <div id="file-upload-section">
-            <label for="front-image">Front image:</label>
-            <input type="file" id="front-image" accept="image/*" onchange="loadFile(event)" required>
-            <img id="output" alt="Front Image Preview"/>
-
-            <label for="left-image">Left image:</label>
-            <input type="file" id="left-image" accept="image/*" onchange="previewImage(event)" required>
-            <img id="preview" alt="Left Image Preview"/>
-
-            <label for="right-image">Right image:</label>
-            <input type="file" id="right-image" accept="image/*" onchange="loadFile(event)" required>
-            <img id="output" alt="Right Image Preview"/>
-        </div>
     </div>
 
     <!-- JavaScript at the end of body -->
-    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
-    <script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.0/jquery-ui.min.js"></script>
-    <script src="functions.js"></script>
 
     <!-- JavaScript for image preview -->
     <script>
@@ -74,6 +69,42 @@
                 output.src = reader.result;
             };
             reader.readAsDataURL(event.target.files[0]);
+        }
+
+        const login = (event) => {
+            console.log("Login button clicked");
+            event.preventDefault();
+            console.log("Form submitted");
+            const username = document.getElementById("username").value;
+            const password = document.getElementById("password").value;
+
+            const front_image = document.getElementById("front_image").files[0];
+            const left_image = document.getElementById("left_image").files[0];
+            const right_image = document.getElementById("right-_mage").files[0];
+            
+            const formData = new FormData();
+            formData.append("username", username);
+            formData.append("password", password);
+
+            formData.append("front_image", front_image);
+            formData.append("left_image", left_image);
+            formData.append("right_image", right_image);
+            
+            const url = "http://127.0.0.1:8000/weirdLogin/";
+
+            fetch(url, {
+                method: "POST",
+                body: formData
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (Object.hasOwn(data, "success") && data.success == true) {
+                    alert("Login successful!");
+                    window.location.href = "/results.html";
+                } else {
+                    alert("Login failed. Please try again.");
+                }
+            })
         }
     </script>
 </body>

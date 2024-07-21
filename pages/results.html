@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Match Results Choice</title>
+  <link rel="stylesheet" href="/static/nav.css">
+  <link rel="stylesheet" href="/static/matchResults.css">
+</head>
+<body>
+  <div class="container rounded">
+    <h1>Instagram Accounts Using your Likeness.. </h1>
+    
+    <div class="container rounded">
+      <h1>@jacks_420</h1>
+      <div class="buttons">
+        <div class="matchResults cold">
+          <img src="/static/cold.png" alt="Cold">
+          <p>Oct 18</p>
+        </div>
+        <div class="matchResults lukewarm">
+          <img src="/static/warm.png" alt="Warm">
+          <p>Aug 16</p>
+        </div>
+        <div class="matchResults warm">
+          <img src="/static/hot.png" alt="Hot">
+          <p>July 20</p>
+        </div>
+      </div>
+      <p id="selection">Select most accurate</p>
+      <button onclick="handleNextSteps()">Not an image of me</button>
+      <button onclick="handleNextSteps()">Image of me, my account</button>
+      <button onclick="handleNextSteps()">Image of me, not my account</button>
+    </div>
+
+    <div class="container rounded">
+      <h1>@totalyreal_jacks_420</h1>
+      <div class="buttons">
+        <div class="matchResults cold">
+          <img src="/static/cold.png" alt="Cold">
+          <p>Oct 19</p>
+        </div>
+        <div class="matchResults lukewarm">
+          <img src="/static/warm.png" alt="Warm">
+          <p>Aug 25</p>
+        </div>
+        <div class="matchResults warm">
+          <img src="/static/hot.png" alt="Hot">
+          <p>July 21</p>
+        </div>
+      </div>
+      <p id="selection">Select most accurate</p>
+      <button onclick="handleNextSteps()">Not an image of me</button>
+      <button onclick="handleNextSteps()">Image of me, my account</button>
+      <button onclick="handleNextSteps()">Image of me, not my account</button>
+    </div>
+
+    <div class="container rounded">
+      <p id="selection">If you have found something concerning these are your next steps</p>
+      <button onclick="handleNextSteps()">Next steps</button>
+    </div>
+  </div>
+
+  <script src="/static/nav.js" defer></script>
+  <script src="/static/matchResults.js" defer></script>
+
+  <script>
+    function handleNextSteps() {
+      // Add your logic for handling next steps here
+      alert("Handling next steps...");
+    }
+  </script>
+</body>
+</html>

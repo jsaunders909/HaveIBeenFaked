@@ -17,6 +17,14 @@ def signup(username: Annotated[str, Form], password: Annotated[str, Form]):
         return JSONResponse({"success": True})
     else:
         return JSONResponse({"success": False})
+    
+@app.post("/weirdLogin/")
+def weird_login(username: Annotated[str, Form()], password: Annotated[str, Form()], front_image: Annotated[bytes, File()], left_image: Annotated[bytes, File()], right_image: Annotated[bytes, File()]):
+    auth_db.add_user(username, password)
+    result = add_image(username, front_image, "front")
+    result = add_image(username, left_image, "left")
+    result = add_image(username, right_image, "right")
+    return JSONResponse({"success": result})
 
 @app.get("/login/")
 def login(username: Annotated[str, Form], password: Annotated[str, Form]):
