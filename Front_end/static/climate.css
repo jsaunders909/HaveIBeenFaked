@@ -1,0 +1,72 @@
+body {
+    font-family: sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background: var(--theme-gradient);
+}
+
+.container {
+    background-color: #fff;
+    padding: 30px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+h1 {
+    font-size: 24px;
+    margin-bottom: 20px;
+}
+
+.buttons {
+    display: flex;
+    justify-content: space-around;
+    margin-bottom: 20px;
+}
+
+.climate-button {
+    border: none;
+    background-color: transparent;
+    cursor: pointer;
+    padding: 10px;
+    text-align: center;
+}
+
+.climate-button img {
+    width: 100%; /* Set width to 100% of the button */
+    height: auto; /* Allow height to adjust proportionally */
+    object-fit: cover; /* Maintain aspect ratio and cover the button area */
+    display: block;
+    margin-bottom: 5px;
+  }
+
+.climate-button span {
+    font-size: 16px;
+}
+
+
+
+#selection {
+    font-style: italic;
+}
+
+.climate-btn {
+    border-radius: 2em;
+    display: block;
+}
+
+.climate {
+    margin: 1em 5em;
+}
+
+.climate div {
+    font-size: 4em;
+    cursor: pointer;
+    user-select: none;
+    transition: .2s;
+}
+
+.climate div:hover {
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.4);
+}

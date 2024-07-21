@@ -1,0 +1,170 @@
+body {
+    background: linear-gradient(45deg, #93c767, #074785);;
+    font-family: arial;
+    min-height: 200vh;
+    margin: 0;
+}
+
+.hidden {
+    display: none;
+}
+
+.loadScreen {
+    background: linear-gradient(45deg, #93c767, #074785);
+    position: fixed;
+    z-index: 100;
+    bottom: 0;
+    right: 0;
+    left: 0;
+    top: 0;
+}
+
+.loaderWrapper {
+    justify-content: center;
+    align-items: center;
+    display: flex;
+    height: 100vh;
+    width: 100vw;
+}
+
+.loader {
+    border: 3vw solid #1588ff;
+    border-top: 3vw solid #777;
+    box-sizing: border-box;
+    border-radius: 100vh;
+    height: 20vw;
+    width: 20vw;
+
+    animation: rotate.75s linear infinite;
+}
+
+.loadBar {
+    transform: translateX(-50%);
+    border: .5em solid #333;
+    border-radius: .8em;
+    background: grey;
+    position: absolute;
+    overflow: hidden;
+    bottom: 5vh;
+    width: 80vw;
+    left: 50%;
+}
+
+.loadBar div {
+    background: #1577df;
+    width: attr(width);
+    height: 3em;
+    
+    animation: load 5s ease-in-out forwards;
+}
+
+.title {
+    text-shadow: 0 4px 4px rgba(0, 0, 0, 0.6);
+    text-align: center;
+    margin-top: 30vh;
+    font-size: 3em;
+    color: white;
+}
+
+@keyframes rotate {
+    0% { transform: rotate(0deg) }
+    100% { transform: rotate(360deg) }
+}
+
+@keyframes load {
+    0% { width: 0% }
+    10% { width: 20% }
+    20% { width: 20% }
+    40% { width: 25% }
+    60% { width: 25% }
+    70% { width: 55% }
+    80% { width: 55% }
+    80% { width: 85% }
+    85% { width: 85% }
+    95% { width: 95% }
+    100% { width: 100% }
+}
+
+.mainTitle {
+    transform: translate(-50%, -50%);
+    text-shadow: 0 2px 4px #000;
+    font-weight: bolder;
+    position: absolute;
+    text-align: center;
+    font-size: 3em;
+    color: white;
+    left: 50%;
+    top: 50%;
+}
+
+.main {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+}
+
+.bgimg {
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.6);
+    border-bottom: 2px solid white;
+    display: block;
+    line-height: 0;
+    height: 100vh;
+    width: 100vw;
+    z-index: -1;
+}
+
+.plan {
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.6);
+    transform: translate(-50%, 0);
+    flex-direction: column;
+    border-radius: 1.5em;
+    background: white;
+    position: absolute;
+    min-height: 20em;
+    max-height: 40em;
+    margin-top: 8em;
+    display: flex;
+    width: 50vw;
+    left: 50%;
+}
+
+.budget {
+    border-bottom: 1px solid #ccc;
+    font-size: 2em;
+    padding: 1em;
+}
+
+.t2 {
+    color: #444;
+    margin: 1.5em;
+}
+
+.activity:nth-child(odd) {
+    background: #EFEFEF;
+}
+
+.activities {
+    border-top: 1px solid grey;
+    overflow: scroll;
+}
+
+.activity {
+    padding: 1em;
+    justify-content:space-between;
+    display: flex;
+}
+
+.synopsys {
+    border-top: 1px solid #333;
+    padding-left: 3em;
+}
+
+.cost::before {
+    content: "$";
+}
+
+.hidden {
+    display: none;
+}
