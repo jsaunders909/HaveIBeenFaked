@@ -4,17 +4,22 @@ import torch
 
 
 class FRTorch:
-
-    def __init__(self, image_size):
+    def __init__(self):
         # Create a face detection pipeline using MTCNN
-        margin = 0 # int(0.1 * image_size)
-        self.mtcnn = MTCNN(image_size=image_size, margin=margin, keep_all=True)
+        self.mtcnn = MTCNN(
+            image_size=160,
+            thresholds=[0.6, 0.7, 0.7],
+            factor=0.709,
+            post_process=True,
+            margin=0,
+            keep_all=True,
+        )
 
         # Create an inception resnet (in eval mode):
-        self.resnet = InceptionResnetV1(pretrained='vggface2').eval()
+        self.resnet = InceptionResnetV1(pretrained="vggface2").eval()
 
     def __call__(self, image_cv, return_crop=False, return_bbox=False):
-        """ Get face embedding from image """
+        """Get face embedding from image"""
 
         # Get cropped and prewhitened image tensor
         faces = self.mtcnn(image_cv)

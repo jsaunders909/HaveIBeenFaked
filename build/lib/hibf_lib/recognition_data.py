@@ -6,6 +6,7 @@ class RecognitionData:
     """
     Class for storing recognition data.
     """
+
     # The name of the recognized person.
     name: str
 
@@ -36,7 +37,6 @@ class RecognitionData:
         """
         self.embedding_front = embedding
 
-
     def __str__(self):
         return f"{self.name}"
 
@@ -44,15 +44,24 @@ class RecognitionData:
         """
         Save the recognition data to a file.
         """
-        if all([self.embedding_left is None, self.embedding_right is None, self.embedding_front is None]):
+        if all(
+            [
+                self.embedding_left is None,
+                self.embedding_right is None,
+                self.embedding_front is None,
+            ]
+        ):
             print(f"Warning: No embeddings for {self.name}.")
             return
 
-        elif any([self.embedding_left is None, self.embedding_right is None, self.embedding_front is None]):
+        elif any(
+            [
+                self.embedding_left is None,
+                self.embedding_right is None,
+                self.embedding_front is None,
+            ]
+        ):
             print(f"Warning: Incomplete embeddings for {self.name}.")
-            cont = input("Do you want to svae the partial embedding? (y/n) ")
-            if cont.lower() != "y":
-                return
 
         with open(path, "wb") as f:
             pickle.dump(self, f)
