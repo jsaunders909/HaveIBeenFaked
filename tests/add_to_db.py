@@ -1,7 +1,9 @@
 import cv2
-from models import FRTorch
-from utils import draw_bbox, draw_text, draw_labelled_bbox
-from recognition_data import RecognitionData
+from hibf_lib.models import FRTorch
+from hibf_lib.utils import draw_bbox, draw_text, draw_labelled_bbox
+from hibf_lib.recognition_data import RecognitionData
+import uuid
+
 
 # Get the webcam
 
@@ -51,7 +53,7 @@ while True:
 
     elif retval & 0xFF == ord("s"):
         embedding, crop, bbox = model(frame, return_crop=True, return_bbox=True)
-        recognition_data.save(f"face_db/{name}.pkl")
+        recognition_data.save(f"face_db/{uuid.uuid4()}.json")
 
         print("Face data saved.")
         break

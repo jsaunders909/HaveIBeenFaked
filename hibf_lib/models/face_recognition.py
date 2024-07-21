@@ -12,7 +12,7 @@ class FRTorch:
             factor=0.709,
             post_process=True,
             margin=0,
-            keep_all=True
+            keep_all=True,
         )
 
         # Create an inception resnet (in eval mode):
